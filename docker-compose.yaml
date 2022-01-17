@@ -8,6 +8,8 @@ services:
     restart: always
     expose:
       - 5000
+    environment:
+      TELEGRAM_TOKEN: 1694530843:AAHycibEgQoqB0udvbUVn80jCcqUA-vnwnc
 
   nginx:
     build: ./nginx-container

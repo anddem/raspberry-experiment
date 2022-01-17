@@ -5,6 +5,7 @@ import telebot.types as tt
 import os
 import cv2
 
+
 def get_bot(token='1694530843:AAHycibEgQoqB0udvbUVn80jCcqUA-vnwnc'):
     token = os.environ.get('TELEGRAM_TOKEN') if token is None else token
     bot = telebot.TeleBot(token=token)
@@ -42,6 +43,16 @@ class GetImage(Resource):
 
 
 api.add_resource(CameraImage, '/camera')
+api.add_resource(GetImage, '/images/<image>')
+
+
+class GetImage(Resource):
+    def get(self, image: str):
+        file = os.path.join(os.curdir, 'images', image)
+        return send_file(file)
+
+
+
 api.add_resource(GetImage, '/images/<image>')
 
 

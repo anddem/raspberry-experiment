@@ -1,19 +1,17 @@
-FROM python:3.10-alpine3.14
+FROM python:3.10-slim
 
-WORKDIR /usr/src/app
+RUN apt-get update \
+&& apt-get install gcc python3-opencv python3-numpy -y \
+&& apt-get clean
 
-# RUN addgroup --system app && adduser --system app
+COPY requirements.txt /app/requirements.txt
 
-# USER app
-
-RUN apk add --no-cache python3-dev build-base linux-headers pcre-dev
-
-COPY requirements.txt ./
+WORKDIR app
+# RUN pip install --user -r requirements.txt
 RUN set -ex && \
     pip install -f ./.pkg_cache -r requirements.txt && \
     rm -rf ./.pkg_cache
+COPY . /app
 
-COPY app.py .
-COPY wsgi.ini .
 
 CMD ["uwsgi", "wsgi.ini"]
