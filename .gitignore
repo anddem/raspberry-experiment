@@ -1,3 +1,4 @@
 raspberry-venv
 .vscode/
 __pycache__
+*.png
